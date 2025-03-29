@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alurex</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Global Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Header & Navigation */
+    header {
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 2em;
+      font-weight: bold;
+      color: red;
+      text-shadow: 2px 2px 4px #000;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav ul li {
+      margin: 0 10px;
+    }
+    nav ul li a {
+      font-size: 0.95em;
+      color: #fff;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      color: red;
+    }
+    .signin-btn {
+      background-color: red;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .signin-btn:hover {
+      background-color: #cc0000;
+    }
+    /* Section Styles */
+    section {
+      padding: 40px 20px;
+      border-bottom: 1px solid #222;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: red;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    /* Movies Section Layout */
+    .movies {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .movie-card {
+      background-color: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 30%;
+      margin: 15px 0;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0; /* For fade-in */
+    }
+    .movie-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.6);
+    }
+    .movie-card img {
+      width: 100%;
+      display: block;
+    }
+    .movie-info {
+      padding: 15px;
+    }
+    .movie-info h3 {
+      margin-bottom: 10px;
+      color: red;
+    }
+    .movie-info p {
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    /* Testimonials */
+    .testimonial {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 2px 5px rgba(255,0,0,0.5);
+      opacity: 0; /* For fade-in */
+    }
+    .testimonial p {
+      font-style: italic;
+    }
+    .testimonial h4 {
+      margin-top: 10px;
+      color: red;
+    }
+    /* Sign Up Form */
+    .signup-form {
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 2px 10px rgba(255,0,0,0.5);
+      opacity: 0; /* For fade-in */
+    }
+    .signup-form input[type="text"],
+    .signup-form input[type="email"],
+    .signup-form input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    .signup-form button {
+      width: 100%;
+      padding: 10px;
+      background: red;
+      border: none;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .signup-form button:hover {
+      background: #cc0000;
+    }
+    /* Learn More Features */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .feature {
+      background-color: #222;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 10px;
+      flex: 1 1 250px;
+      box-shadow: 0 2px 10px rgba(255,0,0,0.5);
+      opacity: 0; /* For fade-in */
+    }
+    .feature h3 {
+      color: red;
+      margin-bottom: 10px;
+    }
+    /* Responsive */
+    @media(max-width: 768px) {
+      .movie-card {
+         width: 45%;
+      }
+      nav ul li {
+         margin: 0 5px;
+      }
+      .features {
+         flex-direction: column;
+         align-items: center;
+      }
+    }
+    @media(max-width: 480px) {
+      header {
+         flex-direction: column;
+      }
+      .movie-card {
+         width: 90%;
+      }
+      nav ul {
+         flex-direction: column;
+         margin-top: 10px;
+      }
+      nav ul li {
+         margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Logo, Navigation, and Sign In Button -->
+  <header>
+    <div class="logo">Alurex</div>
+    <nav>
+      <ul>
+        <li><a href="#latest">Latest</a></li>
+        <li><a href="#moviesAZ">A-Z Movies</a></li>
+        <li><a href="#actionMovies">Action</a></li>
+        <li><a href="#adventureMovies">Adventure</a></li>
+        <li><a href="#romanceMovies">Romance</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#signup">Sign Up</a></li>
+        <li><a href="#learnMore">Learn More</a></li>
+      </ul>
+    </nav>
+    <button class="signin-btn" onclick="window.location.href='signin.html'">Sign In / Sign Up</button>
+  </header>
+
+  <!-- Top 3 Latest Movies Section -->
+  <section id="latest" class="container">
+    <h2 class="section-title">Top 3 Latest Movies</h2>
+    <div class="movies">
+      <!-- Movie Card 1 -->
+      <div class="movie-card">
+        <img src="movie1.jpg" alt="Movie Title 1">
+        <div class="movie-info">
+          <h3>Movie Title 1</h3>
+          <p>Brief description of movie 1.</p>
+        </div>
+      </div>
+      <!-- Movie Card 2 -->
+      <div class="movie-card">
+        <img src="movie2.jpg" alt="Movie Title 2">
+        <div class="movie-info">
+          <h3>Movie Title 2</h3>
+          <p>Brief description of movie 2.</p>
+        </div>
+      </div>
+      <!-- Movie Card 3 -->
+      <div class="movie-card">
+        <img src="movie3.jpg" alt="Movie Title 3">
+        <div class="movie-info">
+          <h3>Movie Title 3</h3>
+          <p>Brief description of movie 3.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Movies A to Z -->
+  <section id="moviesAZ" class="container">
+    <h2 class="section-title">Browse Movies A to Z</h2>
+    <div class="movies">
+      <!-- Example List Items -->
+      <div class="movie-card">
+        <div class="movie-info">
+          <h3>A - Avatar</h3>
+          <p>Example movie starting with A.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-info">
+          <h3>B - Black Panther</h3>
+          <p>Example movie starting with B.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <div class="movie-info">
+          <h3>C - Captain Marvel</h3>
+          <p>Example movie starting with C.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Action Movies -->
+  <section id="actionMovies" class="container">
+    <h2 class="section-title">Action Movies</h2>
+    <div class="movies">
+      <div class="movie-card">
+        <img src="action1.jpg" alt="Die Hard">
+        <div class="movie-info">
+          <h3>Die Hard</h3>
+          <p>An action-packed classic.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="action2.jpg" alt="Mad Max: Fury Road">
+        <div class="movie-info">
+          <h3>Mad Max: Fury Road</h3>
+          <p>High-octane chase and explosions.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="action3.jpg" alt="John Wick">
+        <div class="movie-info">
+          <h3>John Wick</h3>
+          <p>A relentless assassin’s quest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Adventure Movies -->
+  <section id="adventureMovies" class="container">
+    <h2 class="section-title">Adventure Movies</h2>
+    <div class="movies">
+      <div class="movie-card">
+        <img src="adventure1.jpg" alt="Indiana Jones">
+        <div class="movie-info">
+          <h3>Indiana Jones</h3>
+          <p>A thrilling archaeological journey.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="adventure2.jpg" alt="Jurassic Park">
+        <div class="movie-info">
+          <h3>Jurassic Park</h3>
+          <p>A breathtaking adventure with dinosaurs.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="adventure3.jpg" alt="The Lord of the Rings">
+        <div class="movie-info">
+          <h3>The Lord of the Rings</h3>
+          <p>An epic quest across Middle-earth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Romance Movies -->
+  <section id="romanceMovies" class="container">
+    <h2 class="section-title">Romance Movies</h2>
+    <div class="movies">
+      <div class="movie-card">
+        <img src="romance1.jpg" alt="The Notebook">
+        <div class="movie-info">
+          <h3>The Notebook</h3>
+          <p>A heartwarming love story.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="romance2.jpg" alt="Titanic">
+        <div class="movie-info">
+          <h3>Titanic</h3>
+          <p>An epic romance aboard the ill-fated ship.</p>
+        </div>
+      </div>
+      <div class="movie-card">
+        <img src="romance3.jpg" alt="Pride and Prejudice">
+        <div class="movie-info">
+          <h3>Pride and Prejudice</h3>
+          <p>A classic tale of love and misunderstanding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Testimonials & Comments -->
+  <section id="testimonials" class="container">
+    <h2 class="section-title">What Our Users Say</h2>
+    <div class="testimonial">
+      <p>"Alurex has transformed my movie nights with its amazing collection and easy-to-use interface."</p>
+      <h4>- Alex D.</h4>
+    </div>
+    <div class="testimonial">
+      <p>"I love the curated lists and the way movies are categorized. Highly recommend!"</p>
+      <h4>- Jamie L.</h4>
+    </div>
+  </section>
+
+  <!-- Section 6: Sign Up -->
+  <section id="signup" class="container">
+    <h2 class="section-title">Join Alurex Today</h2>
+    <div class="signup-form">
+      <form id="signupForm" action="signup_processor.php" method="POST">
+        <input type="text" name="fullname" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Section 7: Learn More Features -->
+  <section id="learnMore" class="container">
+    <h2 class="section-title">Discover Alurex Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Curated Collections</h3>
+        <p>Enjoy hand-picked lists of movies to suit every taste—from blockbusters to indie gems.</p>
+      </div>
+      <div class="feature">
+        <h3>Personalized Recommendations</h3>
+        <p>Our app learns your preferences and recommends movies you'll love.</p>
+      </div>
+      <div class="feature">
+        <h3>Seamless Streaming</h3>
+        <p>Access high-quality movie trailers and previews in one click.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional JavaScript for Interactive Features -->
+  <script>
+    // Fade-in effect for movie cards, testimonials, signup form, and features on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      const fadeElements = document.querySelectorAll(".movie-card, .testimonial, .signup-form, .feature");
+      fadeElements.forEach((el, index) => {
+        el.style.opacity = 0;
+        setTimeout(() => {
+          el.style.transition = "opacity 1s";
+          el.style.opacity = 1;
+        }, index * 200);
+      });
+    });
+
+    // Form validation before submission
+    const signupForm = document.getElementById("signupForm");
+    signupForm.addEventListener("submit", function(e) {
+      let fullname = signupForm.fullname.value.trim();
+      let email = signupForm.email.value.trim();
+      let password = signupForm.password.value.trim();
+
+      if (!fullname || !email || !password) {
+        alert("Please fill in all the fields.");
+        e.preventDefault();
+      }
+    });
+
+    // Active navigation highlighting based on scroll position
+    window.addEventListener("scroll", function() {
+      const sections = document.querySelectorAll("section");
+      const scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+
+      sections.forEach(section => {
+        if (scrollPos >= section.offsetTop - section.offsetHeight * 0.25 &&
+            scrollPos < section.offsetTop + section.offsetHeight - section.offsetHeight * 0.25) {
+          const id = section.getAttribute("id");
+          document.querySelectorAll("nav ul li a").forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + id) {
+              link.classList.add("active");
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
